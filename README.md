@@ -81,9 +81,10 @@
   2. If any of the required details, that is, website, username selector, password selector, login button selector, or password list filename, is missing it is asked from the user in the terminal.
   3. The program visits the provided website on Chrome.
   4. If the website does not exist it prints a message in the terminal and stops.
-  5. It enters the username and password into the entry boxes of the webpage using the provided element selectors for them. 5. It presses the login button using the provided element selector for this.
-  6. It displays the number, username, and password of each attempt in the terminal.
-  7. If the password is found or the website does not allow further attempts it prints a message in the terminal and stops. Else it returns to step 5.
+  5. It enters the username and password into the entry boxes of the webpage using the provided element selectors for them.
+  6. It presses the login button using the provided element selector for this.
+  7. It displays the number, username, and password of each attempt in the terminal.
+  8. If the password is found or the website does not allow further attempts it prints a message in the terminal and stops. Else it returns to step 5.
   
 ### Sample Output
 Due to handling confidential data there is no sample output.
