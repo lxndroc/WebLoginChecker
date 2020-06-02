@@ -66,9 +66,9 @@
 * [Download](https://github.com/lxndroc/WebLoginChecker/blob/master/password_list.txt) the sample password list text file.
 * Set the value of `DRIVER_PATH` on line 20 to the path of the chromedriver executable on your operating system (OS), e.g. `DRIVER_PATH = 'D:/utils/net/chromedriver'` or `DRIVER_PATH = '/users/username/utils/net/chromedriver'`.
 * Set the value of `WEBSITE` on line 72 to the URL of the website to be checked.
-* Set the value of `USERNAME_SELECTOR` on line 74 to the username field selector. This can be found by right clicking on the username input field and then right clicking on the highlighted line under the Elements tab and selecting Copy > Copy selector from the drop-down menu.
-* Set the value of `PASSWORD_SELECTOR` on line 76 to the password field selector. This can be found similarly to the username selector.
-* Set the value of `LOGIN_BUTTON_SELECTOR` on line 78 to the login button selector. This can be found similarly to the username selector.
+* Set the value of `USERNAME_SELECTOR` on line 74 to the username field CSS selector. This can be found by right clicking on the username input field and then right clicking on the highlighted line under the Elements tab and selecting Copy > Copy selector from the drop-down menu.
+* Set the value of `PASSWORD_SELECTOR` on line 76 to the password field CSS selector. This can be found similarly to the username selector.
+* Set the value of `LOGIN_BUTTON_SELECTOR` on line 78 to the login button CSS selector. This can be found similarly to the username selector.
 * If any of the previous 4 is left blank the user is asked for a value in the terminal.
 * Replace the 3 passwords in the `password_list.txt` with the passwords to be checked, 1 per line.
 * These are the source code and the input file of the program.
@@ -79,16 +79,16 @@
 
 ### Process
   1. The program loads Chrome.
-  2. If any of the required details, that is, website, username selector, password selector, login button selector, or password list filename, is missing it is asked from the user in the terminal.
+  2. If any of the required details, that is, website, username CSS selector, password CSS selector, login button CSS selector, or password list filename, is missing it is asked from the user in the terminal.
   3. The program visits the provided website on Chrome.
   4. It prints a message in the terminal informing whether the website is accessible.
   5. If the website is not accessible it exits.
-  6. If the provided username selector is found it enters the username into the corresponding entry box of the webpage. Else it exits.
+  6. If the provided username CSS selector is found it enters the username into the corresponding entry box of the webpage. Else it exits.
   7. If the password list has remaining passwords it reads the next one. Else it exits.
-  8. If the provided password selector is found it enters the next password into the corresponding entry box of the webpage. Else it exits.
-  9. If the provided login button selector is found it presses the login button. Else it exits.
+  8. If the provided password CSS selector is found it enters the next password into the corresponding entry box of the webpage. Else it exits.
+  9. If the provided login button CSS selector is found it presses the login button. Else it exits.
   10. It prints the number, username, password, and result of each attempt in the terminal.
-  11. If the password is found or the website does not allow further attempts it prints a message in the terminal and exits. Else it returns to step 6.
+  11. If the password is found or the website does not allow further attempts it prints a message in the terminal, waits for 1 min for the user to check what happened, and exits. Else it returns to step 6.
   
 ### Sample Output
 ```
