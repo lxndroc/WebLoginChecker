@@ -63,14 +63,15 @@
 * This is the web browser Chrome.
 ### 5. `WebLoginChecker`
 * [Download](https://github.com/lxndroc/WebLoginChecker/blob/master/WebLoginChecker.py) the Python source.
+* [Download](https://github.com/lxndroc/WebLoginChecker/blob/master/password_list.txt) the sample password list text file.
 * Set the value of `DRIVER_PATH` on line 20 to the path of the chromedriver executable on your operating system (OS), e.g. `DRIVER_PATH = 'D:/utils/net/chromedriver'` or `DRIVER_PATH = '/users/username/utils/net/chromedriver'`.
-* Set the value of `WEBSITE` on line 67 to the URL of the website to be checked.
-* Set the value of `USERNAME_SELECTOR` on line 69 to the username field selector.
-* Set the value of `PASSWORD_SELECTOR` on line 71 to the password field selector.
-* Set the value of `LOGIN_BUTTON_SELECTOR` on line 73 to the login button selector.
-* Set the value of `PASS_LIST` on line 75 to the path and filename containing the passwords to be checked.
-* If any of the previous 5 is left blank the user is asked for a value on the terminal.
-* This is the source code of the program.
+* Set the value of `WEBSITE` on line 72 to the URL of the website to be checked.
+* Set the value of `USERNAME_SELECTOR` on line 74 to the username field selector. This can be found by right clicking on the username input field and then right clicking on the highlighted line under the Elements tab and selecting Copy > Copy selector from the drop-down menu.
+* Set the value of `PASSWORD_SELECTOR` on line 76 to the password field selector. This can be found similarly to the username selector.
+* Set the value of `LOGIN_BUTTON_SELECTOR` on line 78 to the login button selector. This can be found similarly to the username selector.
+* If any of the previous 4 is left blank the user is asked for a value in the terminal.
+* Replace the 3 passwords in the `password_list.txt` with the passwords to be checked, 1 per line.
+* These are the source code and the input file of the program.
 
 ## Execution
 * Run `WebLoginChecker` with `python WebLoginChecker.py` from the terminal.
@@ -80,14 +81,41 @@
   1. The program loads Chrome.
   2. If any of the required details, that is, website, username selector, password selector, login button selector, or password list filename, is missing it is asked from the user in the terminal.
   3. The program visits the provided website on Chrome.
-  4. If the website does not exist it prints a message in the terminal and stops.
-  5. It enters the username and password into the entry boxes of the webpage using the provided element selectors for them.
-  6. It presses the login button using the provided element selector for this.
-  7. It displays the number, username, and password of each attempt in the terminal.
-  8. If the password is found or the website does not allow further attempts it prints a message in the terminal and stops. Else it returns to step 5.
+  4. It prints a message in the terminal informing whether the website is accessible.
+  5. If the website is not accessible it exits.
+  6. If the provided username selector is found it enters the username into the corresponding entry box of the webpage. Else it exits.
+  7. If the password list has remaining passwords it reads the next one. Else it exits.
+  8. If the provided password selector is found it enters the next password into the corresponding entry box of the webpage. Else it exits.
+  9. If the provided login button selector is found it presses the login button. Else it exits.
+  10. It prints the number, username, password, and result of each attempt in the terminal.
+  11. If the password is found or the website does not allow further attempts it prints a message in the terminal and exits. Else it returns to step 6.
   
 ### Sample Output
-Due to handling confidential data there is no sample output.
+```
+        WebLoginChecker 2020 - by @lxndroc-@aoctut
+        ------------------------------------------
+
+[The url was replaced below to keep it safer]
+[v] Website https://[url].com/ is accessible!
+
+[The following 2 lines can be ignored]
+DevTools listening on ws://127.0.0.1:53693/devtools/browser/f92c5a82-ff80-437e-9b62-24c138900cef
+[32084:33248:0602/093816.431:ERROR:device_event_log_impl.cc(208)] [09:38:16.431] Bluetooth: bluetooth_adapter_winrt.cc:1060 Getting Default Adapter failed.
+------------------------------------------
+[!] 1. User: test
+       Password: wEb_pAs1!
+[x] Login unsuccessful!
+------------------------------------------
+[!] 2. User: test
+       Password: &p@sS#2.1
+[x] Login unsuccessful!
+------------------------------------------
+[!] 3. User: test
+       Password: p@sswOrd%3
+[x] Login unsuccessful!
+------------------------------------------
+[!] Exiting
+```
 
 ## Licence
 WebLoginChecker is released with the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) licence](https://creativecommons.org/licenses/by-nc-sa/4.0/).
